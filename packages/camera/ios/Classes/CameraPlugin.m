@@ -283,9 +283,14 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     _zoom = 1;
     return;
   }
-
+    if (_zoom > maxAvailableVideoZoomFactor){
+        _zoom = maxAvailableVideoZoomFactor;
+    }
+    else if(_zoom < minAvailableVideoZoomFactor){
+        _zoom = minAvailableVideoZoomFactor;
+    }
   [_captureDevice lockForConfiguration:NULL];
-  [_captureDevice setVideoZoomFactor:_zoom];
+    [_captureDevice rampToVideoZoomFactor:_zoom withRate:1.0];
   [_captureDevice unlockForConfiguration];
 }
 
