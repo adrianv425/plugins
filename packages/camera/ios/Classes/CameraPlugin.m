@@ -289,7 +289,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
   else if(_zoom < [_captureDevice minAvailableVideoZoomFactor]){
     _zoom = [_captureDevice minAvailableVideoZoomFactor];
   }
-    if([_captureDevice rampingVideoZoom]){
+    if([_captureDevice isRampingVideoZoom]){
         [_captureDevice lockForConfiguration:NULL];
         [_captureDevice cancelVideoZoomRamp];
         [_captureDevice unlockForConfiguration];
