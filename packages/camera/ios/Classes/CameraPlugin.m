@@ -206,7 +206,7 @@ static ResolutionPreset getResolutionPresetForString(NSString *preset) {
 - (void)startImageStreamWithMessenger:(NSObject<FlutterBinaryMessenger> *)messenger;
 - (void)stopImageStream;
 - (void)captureToFile:(NSString *)filename result:(FlutterResult)result;
-- (void)zoom:(NSUInteger *)step;
+- (void)zoom:(CGFloat *)step;
 @end
 
 @implementation FLTCam {
@@ -221,7 +221,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
                      dispatchQueue:(dispatch_queue_t)dispatchQueue
                              error:(NSError **)error {
   self = [super init];
-  _zoom = 1;
+  _zoom = 1.0;
 
   NSAssert(self, @"super init cannot be nil");
   @try {
@@ -279,8 +279,8 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
 - (void)zoom:(CGFloat *)step {
   _zoom += step;
 
-  if (_zoom < 1) {
-    _zoom = 1;
+  if (_zoom < 1.0) {
+    _zoom = 1.0;
     return;
   }
   if (_zoom > [_captureDevice maxAvailableVideoZoomFactor]){
