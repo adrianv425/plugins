@@ -221,7 +221,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
                      dispatchQueue:(dispatch_queue_t)dispatchQueue
                              error:(NSError **)error {
   self = [super init];
-  _zoom = 1.0;
+  CGFloat _zoom = 1.0;
 
   NSAssert(self, @"super init cannot be nil");
   @try {
