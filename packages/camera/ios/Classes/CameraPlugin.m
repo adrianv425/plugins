@@ -896,14 +896,14 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_camera stopImageStream];
     result(nil);
   } else if ([@"zoomIn" isEqualToString:call.method]) {
-    [_camera zoom:0.1];
+    [_camera zoom:(CGFloat *) 0.1];
     result(nil);
   } else if ([@"zoomOut" isEqualToString:call.method]) {
-    [_camera zoom:-0.1];
+    [_camera zoom:(CGFloat *) -0.1];
     result(nil);
   } else if ([@"zoom" isEqualToString:call.method]) {
-    CGFloat step = ((NSNumber *)call.arguments[@"step"]).doubleValue;
-    [_camera zoom:step];
+    (CGFloat *) step = &((NSNumber *)call.arguments[@"step"]).doubleValue;
+    [_camera zoom: step];
     result(nil);
   } else if ([@"pauseVideoRecording" isEqualToString:call.method]) {
     [_camera pauseVideoRecording];
