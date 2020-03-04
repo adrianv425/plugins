@@ -277,8 +277,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
 }
 
 - (void)zoom:(CGFloat)step {
-  _zoom += step;
-    NSLog(@"_zoom = %f\n", _zoom);
+    _zoom = [_captureDevice videoZoomFactor] + step;
     NSLog(@"maxZoom= %f\n", [_captureDevice maxAvailableVideoZoomFactor]);
   if (_zoom < 1.0) {
     _zoom = 1.0;
@@ -903,15 +902,15 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_camera stopImageStream];
     result(nil);
   } else if ([@"zoomIn" isEqualToString:call.method]) {
-      CGFloat z = (CGFloat) 0.1;
+      CGFloat z = 0.1;
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoomOut" isEqualToString:call.method]) {
-      CGFloat z = (CGFloat) -0.1;
+      CGFloat z = -0.1;
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoom" isEqualToString:call.method]) {
-    CGFloat step = (CGFloat) ((NSNumber *)call.arguments[@"step"]).doubleValue;
+    CGFloat step = ((NSNumber *)call.arguments[@"step"]).doubleValue;
     [_camera zoom:step];
     result(nil);
   } else if ([@"pauseVideoRecording" isEqualToString:call.method]) {
