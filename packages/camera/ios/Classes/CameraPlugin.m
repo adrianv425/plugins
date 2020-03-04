@@ -221,7 +221,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
                      dispatchQueue:(dispatch_queue_t)dispatchQueue
                              error:(NSError **)error {
   self = [super init];
-  CGFloat _zoom = 1.0;
+  _zoom = CGFloat(1.0);
 
   NSAssert(self, @"super init cannot be nil");
   @try {
@@ -903,15 +903,15 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_camera stopImageStream];
     result(nil);
   } else if ([@"zoomIn" isEqualToString:call.method]) {
-      CGFloat z = 0.1;
+      z = CGFloat(0.1);
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoomOut" isEqualToString:call.method]) {
-      CGFloat z = -0.1;
+      z = CGFloat(-0.1);
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoom" isEqualToString:call.method]) {
-    CGFloat step = ((NSNumber *)call.arguments[@"step"]).doubleValue;
+    step = CGFloat(((NSNumber *)call.arguments[@"step"]).doubleValue);
     [_camera zoom:step];
     result(nil);
   } else if ([@"pauseVideoRecording" isEqualToString:call.method]) {
