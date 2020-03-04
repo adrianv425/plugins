@@ -197,7 +197,7 @@ static ResolutionPreset getResolutionPresetForString(NSString *preset) {
                        enableAudio:(BOOL)enableAudio
                      dispatchQueue:(dispatch_queue_t)dispatchQueue
                              error:(NSError **)error;
-@property(nonatomic, assign) int zoom;
+@property(nonatomic, assign) CGFloat zoom;
 
 - (void)start;
 - (void)stop;
@@ -221,7 +221,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
                      dispatchQueue:(dispatch_queue_t)dispatchQueue
                              error:(NSError **)error {
   self = [super init];
-  _zoom = CGFloat(1.0);
+  CGFloat _zoom = (CGFloat) 1.0;
 
   NSAssert(self, @"super init cannot be nil");
   @try {
@@ -903,15 +903,15 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_camera stopImageStream];
     result(nil);
   } else if ([@"zoomIn" isEqualToString:call.method]) {
-      z = CGFloat(0.1);
+      CGFloat z = (CGFloat) 0.1;
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoomOut" isEqualToString:call.method]) {
-      z = CGFloat(-0.1);
+      CGFloat z = (CGFloat) -0.1;
     [_camera zoom:z];
     result(nil);
   } else if ([@"zoom" isEqualToString:call.method]) {
-    step = CGFloat(((NSNumber *)call.arguments[@"step"]).doubleValue);
+    CGFloat step = (CGFloat) ((NSNumber *)call.arguments[@"step"]).doubleValue;
     [_camera zoom:step];
     result(nil);
   } else if ([@"pauseVideoRecording" isEqualToString:call.method]) {
