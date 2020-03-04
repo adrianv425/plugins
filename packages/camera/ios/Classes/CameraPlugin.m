@@ -281,7 +281,6 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     NSLog(@"maxZoom= %f\n", [_captureDevice maxAvailableVideoZoomFactor]);
   if (_zoom < 1.0) {
     _zoom = 1.0;
-    return;
   }
   if (_zoom > [_captureDevice maxAvailableVideoZoomFactor]){
     _zoom = [_captureDevice maxAvailableVideoZoomFactor];
