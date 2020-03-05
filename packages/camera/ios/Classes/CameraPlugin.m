@@ -207,6 +207,7 @@ static ResolutionPreset getResolutionPresetForString(NSString *preset) {
 - (void)stopImageStream;
 - (void)captureToFile:(NSString *)filename result:(FlutterResult)result;
 - (void)zoom:(CGFloat)step;
+- (void)zoomTo:(CGFloat)step;
 @end
 
 @implementation FLTCam {
@@ -279,6 +280,30 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
 - (void)zoom:(CGFloat)step {
     _zoom = [_captureDevice videoZoomFactor] + step;
     NSLog(@"maxZoom= %f\n", [_captureDevice maxAvailableVideoZoomFactor]);
+  if (_zoom < 1.0) {
+    _zoom = 1.0;
+  }
+  if (_zoom > [_captureDevice maxAvailableVideoZoomFactor]){
+    _zoom = [_captureDevice maxAvailableVideoZoomFactor];
+  }
+  else if(_zoom < [_captureDevice minAvailableVideoZoomFactor]){
+    _zoom = [_captureDevice minAvailableVideoZoomFactor];
+  }
+
+    if(_captureDevice.isRampingVideoZoom){
+      [_captureDevice lockForConfiguration:NULL];
+      [_captureDevice cancelVideoZoomRamp];
+      [_captureDevice unlockForConfiguration];
+    
+    }
+      [_captureDevice lockForConfiguration:NULL];
+      [_captureDevice rampToVideoZoomFactor:_zoom withRate:2.0];
+      [_captureDevice unlockForConfiguration];
+    
+}
+
+- (void)zoomTo:(CGFloat)step {
+    _zoom = step;
   if (_zoom < 1.0) {
     _zoom = 1.0;
   }
@@ -911,6 +936,10 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
   } else if ([@"zoom" isEqualToString:call.method]) {
     CGFloat step = ((NSNumber *)call.arguments[@"step"]).doubleValue;
     [_camera zoom:step];
+    result(nil);
+  }else if ([@"zoomTo" isEqualToString:call.method]) {
+    CGFloat step = ((NSNumber *)call.arguments[@"step"]).doubleValue;
+    [_camera zoomTo:step];
     result(nil);
   } else if ([@"pauseVideoRecording" isEqualToString:call.method]) {
     [_camera pauseVideoRecording];
