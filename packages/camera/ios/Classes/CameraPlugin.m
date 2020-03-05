@@ -297,7 +297,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     
     }
       [_captureDevice lockForConfiguration:NULL];
-      [_captureDevice rampToVideoZoomFactor:_zoom withRate:2.0];
+      [_captureDevice rampToVideoZoomFactor:_zoom withRate:4.0];
       [_captureDevice unlockForConfiguration];
     
 }
@@ -321,7 +321,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     
     }
       [_captureDevice lockForConfiguration:NULL];
-      [_captureDevice rampToVideoZoomFactor:_zoom withRate:2.0];
+      [_captureDevice rampToVideoZoomFactor:_zoom withRate:4.0];
       [_captureDevice unlockForConfiguration];
     
 }
