@@ -591,11 +591,19 @@ class CameraController extends ValueNotifier<CameraValue> {
   }
 
   ///
-  /// change zoom by specific [step].
-  /// with a negative step, the zoom will be 1
+  /// change zoom BY specific [step].
+  /// with a negative step, the zoom will be 1.0
   ///
   Future<void> zoom(double step) async {
     await _channel.invokeMethod<void>('zoom', <String, dynamic>{'step': step});
+  }
+
+  ///
+  /// change zoom TO specific [step].
+  /// with a negative step, the zoom will be 1.0
+  ///
+  Future<void> zoomTo(double step) async {
+    await _channel.invokeMethod<void>('zoomTo', <String, dynamic>{'step': step});
   }
 
   Future<void> zoomOut() async {
